@@ -29,6 +29,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  color: var(--tg-theme-text-color);
+  background-color: var(--tg-theme-secondary-bg-color);
 }
 
 h1 {
@@ -66,6 +68,11 @@ button:focus-visible {
   text-align: center;
 }
 
+.buton__simple {
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -77,4 +84,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.d-flex {
+  display: flex;
 }

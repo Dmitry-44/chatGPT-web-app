@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ProfileCard from "./components/ProfileCard.vue"
 
 const tg = window.Telegram.WebApp
 
@@ -12,14 +13,24 @@ const pay = () => {
 </script>
 
 <template>
+  <header class="header"></header>
+  <div class="body">
+    <div class="container">
+      <ProfileCard />
+    </div>
+  </div>
+  <!-- <footer></footer> -->
   <!-- <HelloWorld msg="Vite + Vue" /> -->
-  <h1>Hello, {{ user?.username || 'my dear' }}!</h1>
+  <!-- <h1>Hello, {{ user?.username || 'my dear' }}!</h1>
   <h3 v-if="user?.id">your id is: {{ user?.id }}</h3>
   <h5>sereja pid0r</h5>
-  <button @click="pay">pay</button>
+  <button @click="pay">pay</button> -->
 </template>
 
 <style scoped>
+.container {
+  padding: 1rem;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
