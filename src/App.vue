@@ -1,30 +1,35 @@
 <script setup lang="ts">
+import { onBeforeMount, onMounted, Ref, ref } from "vue";
+import Loader from "./components/Loader.vue";
 import ProfileCard from "./components/ProfileCard.vue"
+import { Tg } from "./main";
+import { Api } from "./services/Api";
+import { User } from "./user.entity";
 
-const tg = window.Telegram.WebApp
+const loading = ref(true)
+const user: Ref<User|null> = ref(null)
 
-const user = tg.initDataUnsafe.user
+onBeforeMount(async()=>{
+  loading.value=true
+  const userId = Tg.initDataUnsafe?.user?.id
+  user.value = await Api.getUser(userId).finally(()=>{loading.value=false})
+})
 
-const pay = () => {
-  const data = 'pay'
-  tg.sendData(JSON.stringify(data));
-}
+onMounted(()=>{
+  console.log('tg', Tg)
+})
 
 </script>
 
 <template>
   <header class="header"></header>
-  <div class="body">
+  <div v-if="!loading" class="body">
     <div class="container">
       <ProfileCard />
     </div>
   </div>
-  <!-- <footer></footer> -->
-  <!-- <HelloWorld msg="Vite + Vue" /> -->
-  <!-- <h1>Hello, {{ user?.username || 'my dear' }}!</h1>
-  <h3 v-if="user?.id">your id is: {{ user?.id }}</h3>
-  <h5>sereja pid0r</h5>
-  <button @click="pay">pay</button> -->
+  <Loader v-else/>
+  <!-- <div v-if="!loading&&!user">Пользователь не найден</div> -->
 </template>
 
 <style scoped>
@@ -43,4 +48,6 @@ const pay = () => {
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
+
+
 </style>

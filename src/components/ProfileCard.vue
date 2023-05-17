@@ -1,27 +1,33 @@
 <script setup lang="ts">
-	const tg = window.Telegram.WebApp
-	let user = tg.initDataUnsafe.user
-	user = {
+import { onMounted, Ref, ref } from 'vue';
+import { Tg } from '../main';
+import { User } from '../user.entity';
+
+	let userInit = Tg.initDataUnsafe.user
+	userInit = {
 		first_name: 'Dmitry',
 		last_name: 'Sakovich',
 		photo_url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/5d62c5f2-2855-434e-b949-26deffd73d2e/600x900'
 	}
+
+	const user:Ref<User|null> = ref(null)
+
 </script>
 
 <template>
 	<div class="profile__card">
 		<div class="header">
-			<img :src="user.photo_url" alt="фотография пользователя" class="profile__avatar">
-			<h4 class="profile__username">{{ user.last_name }} {{ user.first_name  }}</h4>
+			<img :src="userInit.photo_url" alt="фотография пользователя" class="profile__avatar">
+			<h4 class="profile__username">{{ userInit.last_name }} {{ userInit.first_name  }}</h4>
 		</div>
-		<div class="info">
+		<div v-if="user" class="info">
 			<div class="d-flex">
 				<span class="key">Осталось запросов:</span>
-				<span class="value">44</span>
+				<span class="value">{{ user?.request }}</span>
 			</div>
 			<div class="d-flex">
 				<span class="key">Тариф:</span>
-				<span class="value">Оптимальный</span>
+				<span class="value">{{ user?.tariff }}</span>
 			</div>
 		</div>
 	</div>
@@ -53,6 +59,8 @@
 .actions {
 	margin-top: 5rem;
 	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 .actions button {
 	width: min(100%, 300px);
