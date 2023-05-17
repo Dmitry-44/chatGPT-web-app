@@ -2,6 +2,7 @@
 import { onBeforeMount, onMounted, Ref, ref } from "vue";
 import Loader from "./components/Loader.vue";
 import ProfileCard from "./components/ProfileCard.vue"
+import Router from "./components/Router.vue";
 import { Tg } from "./main";
 import { Api } from "./services/Api";
 import { User } from "./user.entity";
@@ -22,14 +23,13 @@ onMounted(()=>{
 </script>
 
 <template>
-  <header class="header"></header>
-  <div v-if="!loading" class="body">
-    <div class="container">
-      <ProfileCard />
-    </div>
-  </div>
+  <!-- <header class="header"></header>
+  <div  class="body">
+    <div class="container"> -->
+      <Router v-if="!loading" />
+    <!-- </div>
+  </div> -->
   <Loader v-else/>
-  <!-- <div v-if="!loading&&!user">Пользователь не найден</div> -->
 </template>
 
 <style scoped>

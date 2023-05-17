@@ -12,6 +12,7 @@ import { User } from '../user.entity';
 
 	const user:Ref<User|null> = ref(null)
 
+
 </script>
 
 <template>
@@ -33,8 +34,8 @@ import { User } from '../user.entity';
 	</div>
 	<div class="actions">
 		<button class="btn__simple">Улучшить тариф</button>
-		<button class="btn__simple">Лайфхаки по использованию</button>
-		<button class="btn__simple">Реферальная программа</button>
+		<a href="/guide" class="btn__simple">Лайфхаки по использованию</a>
+		<a class="btn__simple">Реферальная программа</a>
 	</div>
 </template>
 
