@@ -33,6 +33,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  width: 100%;
   color: var(--tg-theme-text-color);
   background-color: var(--tg-theme-secondary-bg-color);
 }
@@ -55,7 +56,7 @@ button, .btn__simple {
 }
 button:hover,
 .btn__simple:hover {
-  border-color: #646cff;
+  border-color: #fff;
 }
 button:focus,
 .btn__simple:focus,
@@ -79,6 +80,17 @@ button:focus-visible,
   background-color: var(--tg-theme-button-color);
   color: var(--tg-theme-button-text-color);
 }
+.btn__nav {
+  border: 2px solid #09244BFF;
+  display: inline-flex;
+  justify-content: center;
+}
+.btn__nav img {
+  margin-left: 5px;
+}
+.btn__nav:hover {
+  border-color: inherit;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -95,4 +107,5 @@ button:focus-visible,
 
 .d-flex {
   display: flex;
+  margin: .5rem;
 }

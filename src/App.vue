@@ -12,7 +12,7 @@ const user: Ref<User|null> = ref(null)
 
 onBeforeMount(async()=>{
   loading.value=true
-  const userId = Tg.initDataUnsafe?.user?.id
+  const userId = Tg.initDataUnsafe?.user?.id || 6189180632
   user.value = await Api.getUser(userId).finally(()=>{loading.value=false})
 })
 

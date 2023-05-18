@@ -21,21 +21,26 @@ import { User } from '../user.entity';
 			<img :src="userInit.photo_url" alt="фотография пользователя" class="profile__avatar">
 			<h4 class="profile__username">{{ userInit.last_name }} {{ userInit.first_name  }}</h4>
 		</div>
-		<div v-if="user" class="info">
+		<div class="info">
+			<div class="d-flex">
+				<span class="key">Тип подписки:</span>
+				<span class="value">{{ user?.tariff || 'FREE' }}</span>
+			</div>
 			<div class="d-flex">
 				<span class="key">Осталось запросов:</span>
-				<span class="value">{{ user?.request }}</span>
+				<span class="value">{{ user?.request || '-' }}</span>
 			</div>
 			<div class="d-flex">
-				<span class="key">Тариф:</span>
-				<span class="value">{{ user?.tariff }}</span>
+				<span class="key">Осталось изображений:</span>
+				<span class="value">{{ '-' }}</span>
 			</div>
 		</div>
+
 	</div>
 	<div class="actions">
-		<button class="btn__simple">Улучшить тариф</button>
-		<a href="/guide" class="btn__simple">Лайфхаки по использованию</a>
-		<a class="btn__simple">Реферальная программа</a>
+		<!-- <button class="btn__simple">Улучшить тариф</button> -->
+		<a href="/tariff" class="btn__simple btn__nav">Посмотреть тарифы <img src="/src/assets/eye_icon.svg" alt=""></a>
+		<!-- <a class="btn__simple">Реферальная программа</a> -->
 	</div>
 </template>
 
@@ -56,6 +61,9 @@ import { User } from '../user.entity';
 }
 .profile__card .info {
 	margin: 1rem 0;
+}
+.profile__username {
+	font-size: 22px;
 }
 .actions {
 	margin-top: 5rem;

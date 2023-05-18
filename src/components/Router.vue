@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Guide from '../pages/Guide.vue';
+import Tariff from '../pages/Tariff.vue';
 import NotFound from '../pages/NotFound.vue';
 import { type Component, computed, ref } from 'vue';
 import Home from '../pages/Home.vue';
 
 const routes: Record<string, Component> = {
   '/': Home,
-  '/guide': Guide
+  '/tariff': Tariff
 }
 
 const currentPath = ref(window.location.pathname)
