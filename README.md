@@ -28,10 +28,10 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 cd chatGPT-web-app
 
 # Соберите образ с помощью Dockerfile
-docker build -t chatGPT-web-app-image .
+docker build -t chat-gpt-web-app .
 
 # Запустите контейнер на порту 80
-docker run -p 80:80 chatGPT-web-app-image
+docker run -p 80:80 chat-gpt-web-app
 ```
 
 После этого приложение будет доступно по адресу http://localhost:80.

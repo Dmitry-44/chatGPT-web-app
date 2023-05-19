@@ -30,12 +30,12 @@ a.btn__simple:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
   width: 100%;
   color: var(--tg-theme-text-color);
-  background-color: var(--tg-theme-secondary-bg-color);
+  /* background-color: var(--tg-theme-secondary-bg-color); */
 }
 
 h1 {
@@ -76,9 +76,15 @@ button:focus-visible,
   text-align: center;
 }
 
+.container {
+  margin-top: 1rem;
+}
+
 .btn__simple {
-  background-color: var(--tg-theme-button-color);
-  color: var(--tg-theme-button-text-color);
+  /* background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color); */
+  background-color: #fff;
+  color: #213547;
 }
 .btn__nav {
   border: 2px solid #09244BFF;

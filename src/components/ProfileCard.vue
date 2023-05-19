@@ -1,25 +1,30 @@
 <script setup lang="ts">
-import { onMounted, Ref, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, Ref, ref } from 'vue';
 import { Tg } from '../main';
+import { Api } from '../services/Api';
 import { User } from '../user.entity';
 
 	let userInit = Tg.initDataUnsafe.user
-	userInit = {
-		first_name: 'Dmitry',
-		last_name: 'Sakovich',
-		photo_url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/5d62c5f2-2855-434e-b949-26deffd73d2e/600x900'
-	}
 
 	const user:Ref<User|null> = ref(null)
+
+	const userName = computed(()=>userInit ? userInit?.first_name+' '+userInit?.last_name : null)
+
+	onBeforeMount(async()=> {
+		//test id 6189180632
+		const userId = Tg.initDataUnsafe?.user?.id
+		user.value = await Api.getUser(userId)
+	})
 
 
 </script>
 
 <template>
 	<div class="profile__card">
+		<!-- <p>юзер с кнопки {{ userInit }}</p> -->
 		<div class="header">
-			<img :src="userInit.photo_url" alt="фотография пользователя" class="profile__avatar">
-			<h4 class="profile__username">{{ userInit.last_name }} {{ userInit.first_name  }}</h4>
+			<img :src="userInit?.photo_url || 'https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/5d62c5f2-2855-434e-b949-26deffd73d2e/600x900'" alt="фотография пользователя" class="profile__avatar">
+			<h4 class="profile__username">{{ userName || userInit?.username }}</h4>
 		</div>
 		<div class="info">
 			<div class="d-flex">
@@ -46,7 +51,7 @@ import { User } from '../user.entity';
 
 <style>
 .profile__card {
-	background-color: var(--tg-theme-bg-color, #fff)
+	/* background-color: var(--tg-theme-bg-color, #fff) */
 }
 .header {
 	display: flex;

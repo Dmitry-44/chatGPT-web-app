@@ -3,12 +3,15 @@ import { ref } from 'vue';
 
 
 const isOpen = ref(false)
+const emit = defineEmits(['close', 'open'])
 
 const open = () => {
 	isOpen.value=true
+	emit('open')
 }
 const close = () => {
 	isOpen.value=false
+	emit('close')
 }
 
 defineExpose({

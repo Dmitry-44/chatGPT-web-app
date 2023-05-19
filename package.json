@@ -1,7 +1,7 @@
 {
   "name": "chatgpt-web-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.4.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {
