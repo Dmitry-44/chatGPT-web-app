@@ -20,6 +20,33 @@ onMounted(()=>{
   console.log('tg', Tg)
 })
 
+const api = 'https://a513-212-38-166-41.eu.ngrok.io/user '
+
+const userData = ref({})
+
+onBeforeMount(()=>{
+  userData.value = getUser()
+})
+
+const getUser = async() => {
+  const data = {
+    user_id: Tg.initDataUnsafe?.user?.id
+  }
+  console.log('data', data)
+  await fetch(
+    api,
+    {
+      method: 'POST',
+      mode: 'no-cors', 
+      body: JSON.stringify(data)
+    }
+  )
+  .then(res=>res.json())
+  .catch(err=>{
+    console.log('fetch err: ', err)
+  })
+}
+
 </script>
 
 <template>
