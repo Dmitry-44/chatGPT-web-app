@@ -1,30 +1,34 @@
 import { User } from '../user.entity';
 
-
 export const Api = (function () {
+	// const apiUrlBase = "http://localhost:8000";
+	const apiUrlBase = "https://53e6-212-38-166-41.eu.ngrok.io";
 
-	const apiUrlBase = "private";
-
-	// публичное поле
-	// const publicField = "public";
-
-	// публичный метод
-	function getUser(id: number): Promise<User|null> {
-		return fetch(
-			apiUrlBase,
-			{
-				method: "POST",
-				body: JSON.stringify({user_id: id})
+	async function getUser(id: number): Promise<User|null> {
+		const data = {
+			user_id: id,
+		}
+		return fetch( 
+			apiUrlBase+'/user', {
+				method: 'POST',
+				body: JSON.stringify(data)
 			}
 		)
-		.then(res=>res.ok ? res.json() : null)
-		.catch(err=>{
-			console.log(err)
-			return null
-		})
+		.then(res=> res.ok ? res.json() : null)
+		.catch(()=>null)
+	}
+
+	async function getPayLink(userId: number, tariffId: number): Promise<string> {
+		return fetch( 
+			apiUrlBase+`/pay/${userId}/${tariffId}`, {method: 'GET'}
+		)
+		.then(res=> res.ok ? res.json() : '')
+		.then(res=> res ? res.payment_link : '')
+		.catch(()=>'')
 	}
 
 	return {
-		getUser
+		getUser,
+		getPayLink
 	};
 })();

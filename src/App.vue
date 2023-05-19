@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, onMounted, Ref, ref } from "vue";
 import Loader from "./components/Loader.vue";
-import ProfileCard from "./components/ProfileCard.vue"
 import Router from "./components/Router.vue";
 import { Tg } from "./main";
 import { Api } from "./services/Api";
@@ -12,24 +11,17 @@ const user: Ref<User|null> = ref(null)
 
 onBeforeMount(async()=>{
   loading.value=true
-  const userId = Tg.initDataUnsafe?.user?.id
-  user.value = await Api.getUser(userId).finally(()=>{loading.value=false})
+  // Tg.expand()
+  const userId = Tg.initDataUnsafe?.user?.id || 6189180632
+  user.value = await Api.getUser(userId).finally(()=>{loading.value=false;Tg.ready()})
 })
 
-onMounted(()=>{
-  console.log('tg', Tg)
-})
 
 </script>
 
 <template>
-  <!-- <header class="header"></header>
-  <div  class="body">
-    <div class="container"> -->
-      <Router v-if="!loading" />
-    <!-- </div>
-  </div> -->
-  <Loader v-else/>
+  <Loader v-if="loading"/>
+  <Router v-else />
 </template>
 
 <style scoped>

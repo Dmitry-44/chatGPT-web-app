@@ -1,47 +1,57 @@
 <script setup lang="ts">
-import { onMounted, Ref, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, Ref, ref } from 'vue';
 import { Tg } from '../main';
+import { Api } from '../services/Api';
 import { User } from '../user.entity';
 
 	let userInit = Tg.initDataUnsafe.user
-	userInit = {
-		first_name: 'Dmitry',
-		last_name: 'Sakovich',
-		photo_url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/5d62c5f2-2855-434e-b949-26deffd73d2e/600x900'
-	}
 
 	const user:Ref<User|null> = ref(null)
+
+	const userName = computed(()=>userInit ? userInit?.first_name+' '+userInit?.last_name : null)
+
+	onBeforeMount(async()=> {
+		//test id 6189180632
+		const userId = Tg.initDataUnsafe?.user?.id
+		user.value = await Api.getUser(userId)
+	})
 
 
 </script>
 
 <template>
 	<div class="profile__card">
+		<!-- <p>юзер с кнопки {{ userInit }}</p> -->
 		<div class="header">
-			<img :src="userInit.photo_url" alt="фотография пользователя" class="profile__avatar">
-			<h4 class="profile__username">{{ userInit.last_name }} {{ userInit.first_name  }}</h4>
+			<img :src="userInit?.photo_url || 'https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/5d62c5f2-2855-434e-b949-26deffd73d2e/600x900'" alt="фотография пользователя" class="profile__avatar">
+			<h4 class="profile__username">{{ userName || userInit?.username }}</h4>
 		</div>
-		<div v-if="user" class="info">
+		<div class="info">
+			<div class="d-flex">
+				<span class="key">Тип подписки:</span>
+				<span class="value">{{ user?.tariff || 'FREE' }}</span>
+			</div>
 			<div class="d-flex">
 				<span class="key">Осталось запросов:</span>
-				<span class="value">{{ user?.request }}</span>
+				<span class="value">{{ user?.request || '-' }}</span>
 			</div>
 			<div class="d-flex">
-				<span class="key">Тариф:</span>
-				<span class="value">{{ user?.tariff }}</span>
+				<span class="key">Осталось изображений:</span>
+				<span class="value">{{ '-' }}</span>
 			</div>
 		</div>
+
 	</div>
 	<div class="actions">
-		<button class="btn__simple">Улучшить тариф</button>
-		<a href="/guide" class="btn__simple">Лайфхаки по использованию</a>
-		<a class="btn__simple">Реферальная программа</a>
+		<!-- <button class="btn__simple">Улучшить тариф</button> -->
+		<a href="/tariff" class="btn__simple btn__nav">Посмотреть тарифы <img src="/src/assets/eye_icon.svg" alt=""></a>
+		<!-- <a class="btn__simple">Реферальная программа</a> -->
 	</div>
 </template>
 
 <style>
 .profile__card {
-	background-color: var(--tg-theme-bg-color, #fff)
+	/* background-color: var(--tg-theme-bg-color, #fff) */
 }
 .header {
 	display: flex;
@@ -56,6 +66,9 @@ import { User } from '../user.entity';
 }
 .profile__card .info {
 	margin: 1rem 0;
+}
+.profile__username {
+	font-size: 22px;
 }
 .actions {
 	margin-top: 5rem;

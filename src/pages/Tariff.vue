@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import Guide from '../components/Guide.vue';
+import TariffList from '../components/TariffList.vue';
 
 </script>
 <template>
-    <header class="header"></header>
     <div  class="body">
         <div class="container">
-            <Guide />
+            <Tariff-list />
         </div>
     </div>
 </template>

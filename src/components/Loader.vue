@@ -13,8 +13,8 @@
 
 .loader__arc {
   box-sizing: border-box;
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   border: 4px solid transparent;
   border-top-color: #0088cc;
