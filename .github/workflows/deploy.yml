@@ -2,8 +2,6 @@ name: Build App
 on:
   push:
     branches: ['master']
-  pull_request:
-    branches: ['master']
   
 jobs:
   my_build_job:
