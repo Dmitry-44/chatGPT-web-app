@@ -13,7 +13,6 @@ const currentPath = ref(window.location.pathname)
 
 window.addEventListener('hashchange', () => {
   currentPath.value = window.location.pathname
-  console.log('currentPath', currentPath.value)
 })
 
 const currentView = computed(() => {
