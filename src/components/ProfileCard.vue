@@ -93,7 +93,7 @@ import { User } from '../user.entity';
 /* для больших устройств размер имени пользователя увеличится */
 @media (min-width: 768px) {
   .username {
-    font-size: 32px; /* большое устройство размер */
+    font-size: 32px;
   }
 }
 
