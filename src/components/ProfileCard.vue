@@ -16,7 +16,6 @@ import { User } from '../user.entity';
 		user.value = await Api.getUser(userId)
 	})
 
-
 </script>
 
 <template>

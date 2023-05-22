@@ -2,6 +2,7 @@
   "name": "chatgpt-web-app",
   "private": true,
   "version": "1.0.0",
+  "homepage": "https://dmitry-44.github.io/chatGPT-web-app",
   "type": "module",
   "scripts": {
     "dev": "vite",
