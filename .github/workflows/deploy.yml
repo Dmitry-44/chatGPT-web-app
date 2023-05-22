@@ -2,8 +2,6 @@ name: Build App
 on:
   push:
     branches: ['master']
-  pull_request:
-    branches: ['master']
   
 jobs:
   my_build_job:
@@ -24,3 +22,6 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
