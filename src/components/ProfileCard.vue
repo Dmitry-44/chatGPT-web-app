@@ -55,8 +55,8 @@ import { User } from '../user.entity';
 }
 .profile__avatar {
   border-radius: 50%;
-  width: 100px; /* mobile размер */
-  height: 100px; /* mobile размер */
+  width: 100px; 
+  height: 100px;
   margin-right: 16px;
   object-fit: cover;
   /* остальные css свойства */
