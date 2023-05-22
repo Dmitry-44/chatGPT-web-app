@@ -8,7 +8,6 @@ export const Api = (function () {
 		const data = {
 			user_id: id,
 		}
-		console.log('getUser')
 		return fetch( 
 			apiUrlBase+'/user', {
 				method: 'POST',
