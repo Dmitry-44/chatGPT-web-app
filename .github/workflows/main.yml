@@ -1,4 +1,4 @@
-name: build app
+name: Build App
 on:
   push:
     branches: [ "main" ]
