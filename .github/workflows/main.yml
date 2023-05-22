@@ -1,4 +1,4 @@
-name: CI
+name: build app
 on:
   push:
     branches: [ "main" ]
