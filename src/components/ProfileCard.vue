@@ -42,7 +42,6 @@ import { User } from '../user.entity';
 
 	</div>
 	<div class="actions">
-		<!-- <button class="btn__simple">Улучшить тариф</button> -->
 		<a href="/tariff" class="btn__simple btn__nav">Посмотреть тарифы <img src="/src/assets/eye_icon.svg" alt=""></a>
 		<!-- <a class="btn__simple">Реферальная программа</a> -->
 	</div>
