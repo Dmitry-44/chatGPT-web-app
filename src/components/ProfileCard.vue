@@ -59,7 +59,6 @@ import { User } from '../user.entity';
   height: 100px;
   margin-right: 16px;
   object-fit: cover;
-  /* остальные css свойства */
 }
 .profile__card .info {
 	margin: 1rem 0;
