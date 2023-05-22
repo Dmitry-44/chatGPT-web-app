@@ -25,3 +25,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+        with:
+          username: 'Dmitry-44'
+          reponame: 'chatGPT-web-app'
+          token: ${{ secrets.GITHUB_TOKEN }}
