@@ -5,15 +5,24 @@ import Router from "./components/Router.vue";
 import { Tg } from "./main";
 import { Api } from "./services/Api";
 import { User } from "./user.entity";
+import { fetchUser } from "./useUser";
 
 const loading = ref(true)
-const user: Ref<User|null> = ref(null)
+// const user: Ref<User|null> = ref(null)
+const userId: Ref<number|null> = ref(null)
+const auth: Ref<boolean> = ref(false)
 
 onBeforeMount(async()=>{
-  loading.value=true
   // Tg.expand()
-  const userId = Tg.initDataUnsafe?.user?.id || 6189180632
-  user.value = await Api.getUser(userId).finally(()=>{loading.value=false;Tg.ready()})
+  // test id 6189180632
+  userId.value = Tg.initDataUnsafe?.user?.id || 6189180632
+  auth.value = Boolean(userId.value)
+  if(!userId.value){
+    loading.value=false
+    return;
+  } else {
+    await fetchUser().finally(()=>{loading.value=false})
+  }
 })
 
 
@@ -21,7 +30,7 @@ onBeforeMount(async()=>{
 
 <template>
   <Loader v-if="loading"/>
-  <Router v-else />
+  <Router :auth="auth" v-else />
 </template>
 
 <style scoped>

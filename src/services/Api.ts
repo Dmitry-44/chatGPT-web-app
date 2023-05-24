@@ -1,8 +1,8 @@
 import { User } from '../user.entity';
 
 export const Api = (function () {
-	// const apiUrlBase = "http://localhost:8000";
-	const apiUrlBase = "https://53e6-212-38-166-41.eu.ngrok.io";
+	const apiUrlBase = "http://localhost:8000";
+	// const apiUrlBase = "https://53e6-212-38-166-41.eu.ngrok.io";
 
 	async function getUser(id: number): Promise<User|null> {
 		const data = {
