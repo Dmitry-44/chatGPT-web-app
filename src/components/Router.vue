@@ -3,6 +3,14 @@ import Tariff from '../pages/Tariff.vue';
 import NotFound from '../pages/NotFound.vue';
 import { type Component, computed, ref } from 'vue';
 import Home from '../pages/Home.vue';
+import Forbidden from '../pages/Forbidden.vue';
+
+defineProps({
+  auth: {
+    type: Boolean,
+    required: true,
+  }
+})
 
 const routes: Record<string, Component> = {
   '/': Home,
@@ -22,5 +30,6 @@ const currentView = computed(() => {
 </script>
 
 <template>
-    <component :is="currentView" />
+    <component v-if="auth" :is="currentView" />
+    <component v-else :is="Forbidden" />
 </template>

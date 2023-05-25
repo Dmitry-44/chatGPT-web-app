@@ -98,6 +98,10 @@ button:focus-visible,
   border-color: inherit;
 }
 
+.text-uppercase {
+  text-transform: uppercase;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

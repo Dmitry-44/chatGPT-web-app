@@ -1,34 +1,33 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onMounted, Ref, ref } from 'vue';
 import { Tg } from '../main';
-import { Api } from '../services/Api';
-import { User } from '../user.entity';
+import { store } from '../store';
 
-	let userInit = Tg.initDataUnsafe.user
+let userInit = Tg.initDataUnsafe.user
 
-	const user:Ref<User|null> = ref(null)
+const userName = computed(
+	()=>userInit 
+		? userInit.first_name&&userInit.last_name
+			? userInit.first_name+' '+userInit.last_name 
+			: userInit.username
+		: ''
+	)
 
-	const userName = computed(()=>userInit ? userInit?.first_name+' '+userInit?.last_name : null)
-
-	onBeforeMount(async()=> {
-		//test id 6189180632
-		const userId = Tg.initDataUnsafe?.user?.id
-		user.value = await Api.getUser(userId)
-	})
+const user = computed(()=> store.getUser())
 
 </script>
 
 <template>
-	<div class="profile__card">
-		<!-- <p>юзер с кнопки {{ userInit }}</p> -->
+	<div :class="['profile__card', {withName: userName}]">
+		<!-- <p>юзер с кнопки {{ user }}</p> -->
 		<div class="header">
 			<img :src="userInit?.photo_url || 'https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/5d62c5f2-2855-434e-b949-26deffd73d2e/600x900'" alt="фотография пользователя" class="profile__avatar">
-			<h4 class="profile__username">{{ userName || userInit?.username }}</h4>
+			<h4 v-if="userName" class="profile__username">{{ userName }}</h4>
 		</div>
 		<div class="info">
 			<div class="d-flex">
 				<span class="key">Тип подписки:</span>
-				<span class="value">{{ user?.tariff || 'FREE' }}</span>
+				<span class="value text-uppercase">{{ user?.tariff }}</span>
 			</div>
 			<div class="d-flex">
 				<span class="key">Осталось запросов:</span>
@@ -49,6 +48,12 @@ import { User } from '../user.entity';
 <style>
 .profile__card {
 	/* background-color: var(--tg-theme-bg-color, #fff) */
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile__card.withName {
+	align-items: initial;
 }
 .header {
 	display: flex;
@@ -67,7 +72,7 @@ import { User } from '../user.entity';
 	font-size: 22px;
 }
 .actions {
-	margin-top: 5rem;
+	margin-top: 3rem;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -88,6 +93,11 @@ import { User } from '../user.entity';
 .username {
   font-size: 24px; /* mobile размер */
   /* остальные css свойства */
+}
+
+.info .value {
+	margin-left: .5rem;
+	font-weight: 600;
 }
 
 /* для больших устройств размер имени пользователя увеличится */

@@ -1,8 +1,7 @@
 import { User } from '../user.entity';
 
 export const Api = (function () {
-	// const apiUrlBase = "http://localhost:8000";
-	const apiUrlBase = "https://53e6-212-38-166-41.eu.ngrok.io";
+	const apiUrlBase = `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}`;
 
 	async function getUser(id: number): Promise<User|null> {
 		const data = {
@@ -15,7 +14,10 @@ export const Api = (function () {
 			}
 		)
 		.then(res=> res.ok ? res.json() : null)
-		.catch(()=>null)
+		.catch((err)=>{
+			console.error(err);
+			return null
+		})
 	}
 
 	async function getPayLink(userId: number, tariffId: number): Promise<string> {

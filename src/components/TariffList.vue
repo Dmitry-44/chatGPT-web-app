@@ -2,24 +2,26 @@
 import Modal from './Modal.vue';
 import Loader from './Loader.vue';
 import { tariffs, UserTariff } from '../user.entity';
-import { nextTick, ref, Ref } from 'vue';
+import { computed, nextTick, ref, Ref } from 'vue';
 import { buyTariff } from '../user.service';
-import { Tg } from '../main';
+import { store } from '../store';
 
 const activeTariff: Ref<UserTariff|null> =ref(null)
 const modal:Ref<typeof Modal|null> = ref(null)
 const loading = ref(false)
-const user = Tg.initDataUnsafe?.user
+const user = computed(()=> store.getUser())
 const payLink: Ref<string> = ref('')
+
 
 const selectTariff = async(tarifName: UserTariff['name']) => {
     activeTariff.value=tariffs.find(tarif=>tarif.name===tarifName)||null
     if(modal.value){
         modal.value['open']()
     }
-    loading.value=true
-    payLink.value = await buyTariff(user, activeTariff.value!).finally(()=>{loading.value=true})
-
+    if(user.value){
+        loading.value=true
+        payLink.value = await buyTariff(user.value, activeTariff.value!).finally(()=>{loading.value=false})
+    }
 }
 
 const modalClose = ()=> {
@@ -47,7 +49,10 @@ const modalClose = ()=> {
             <div class="tariff__info">
                 <span class="tariff__name">Тариф: {{ activeTariff?.name }}</span>
                 <span class="tariff__descr">{{ activeTariff?.description }}</span>
-                <a class="btn__buy" :href="payLink" title="ссылка на страницу оплаты">Купить</a>
+                <Loader v-if="loading" />
+                <a v-if="!loading&&payLink" class="btn__buy" :href="payLink" title="ссылка на страницу оплаты">
+                    Купить
+                </a>
             </div>
         </template>
     </Modal>
@@ -89,5 +94,7 @@ const modalClose = ()=> {
     font-weight: 400;
     padding: 10px;
     margin-top: .6rem;
+    display: inline-flex;
+    justify-content: center;
 }
 </style>

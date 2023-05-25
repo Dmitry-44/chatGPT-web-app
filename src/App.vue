@@ -3,25 +3,29 @@ import { onBeforeMount, onMounted, Ref, ref } from "vue";
 import Loader from "./components/Loader.vue";
 import Router from "./components/Router.vue";
 import { Tg } from "./main";
-import { Api } from "./services/Api";
-import { User } from "./user.entity";
+import { store } from "./store";
+import { getUser } from "./user.service";
 
 const loading = ref(true)
-const user: Ref<User|null> = ref(null)
+const auth: Ref<boolean> = ref(false)
 
-onBeforeMount(async()=>{
-  loading.value=true
-  // Tg.expand()
-  const userId = Tg.initDataUnsafe?.user?.id || 6189180632
-  user.value = await Api.getUser(userId).finally(()=>{loading.value=false;Tg.ready()})
+onBeforeMount(async()=>{  
+  const userId: number|null = Tg.initDataUnsafe?.user?.id || import.meta.env.DEV ? parseInt(import.meta.env.VITE_TEST_USER_ID, 10) : null
+  auth.value = Boolean(userId)
+  if(!auth.value){
+    loading.value=false
+    return;
+  } else {
+    store.setAppIsExpanded(Tg?.isExpanded)
+    getUser(userId!).finally(()=>{loading.value=false})
+  }
 })
-
 
 </script>
 
 <template>
   <Loader v-if="loading"/>
-  <Router v-else />
+  <Router :auth="auth" v-else />
 </template>
 
 <style scoped>
