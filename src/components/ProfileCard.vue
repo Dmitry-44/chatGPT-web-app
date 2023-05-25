@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onMounted, Ref, ref } from 'vue';
 import { Tg } from '../main';
-import { useUser } from '../useUser';
+import { store } from '../store';
 
-	let userInit = Tg.initDataUnsafe.user
+let userInit = Tg.initDataUnsafe.user
 
-	const { user } = useUser()
+const userName = computed(
+	()=>userInit 
+		? userInit.first_name&&userInit.last_name
+			? userInit.first_name+' '+userInit.last_name 
+			: userInit.username
+		: ''
+	)
 
-	const userName = computed(
-		()=>userInit 
-			? userInit.first_name&&userInit.last_name
-				? userInit.first_name+' '+userInit.last_name 
-				: userInit.username
-			: ''
-		)
-
+const user = computed(()=> store.getUser())
 
 </script>
 
@@ -28,7 +27,7 @@ import { useUser } from '../useUser';
 		<div class="info">
 			<div class="d-flex">
 				<span class="key">Тип подписки:</span>
-				<span class="value">{{ user?.tariff }}</span>
+				<span class="value text-uppercase">{{ user?.tariff }}</span>
 			</div>
 			<div class="d-flex">
 				<span class="key">Осталось запросов:</span>
@@ -73,7 +72,7 @@ import { useUser } from '../useUser';
 	font-size: 22px;
 }
 .actions {
-	margin-top: 5rem;
+	margin-top: 3rem;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -94,6 +93,11 @@ import { useUser } from '../useUser';
 .username {
   font-size: 24px; /* mobile размер */
   /* остальные css свойства */
+}
+
+.info .value {
+	margin-left: .5rem;
+	font-weight: 600;
 }
 
 /* для больших устройств размер имени пользователя увеличится */

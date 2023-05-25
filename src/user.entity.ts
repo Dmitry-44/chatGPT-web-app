@@ -3,10 +3,9 @@ export type User = {
     user_id: number;
     user_name: string;
     request: number;
-    tariff: UserTariff
+    tariff: UserTariff['name']
 }
 
-// export type UserTariff = 'free' | 'start' | 'premium' | 'ultimate'
 
 export type UserTariff = {
     id: number,

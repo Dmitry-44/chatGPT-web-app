@@ -2,14 +2,14 @@
 import Modal from './Modal.vue';
 import Loader from './Loader.vue';
 import { tariffs, UserTariff } from '../user.entity';
-import { nextTick, ref, Ref } from 'vue';
+import { computed, nextTick, ref, Ref } from 'vue';
 import { buyTariff } from '../user.service';
-import { Tg } from '../main';
+import { store } from '../store';
 
 const activeTariff: Ref<UserTariff|null> =ref(null)
 const modal:Ref<typeof Modal|null> = ref(null)
 const loading = ref(false)
-const user = Tg.initDataUnsafe?.user
+const user = computed(()=> store.getUser())
 const payLink: Ref<string> = ref('')
 
 
@@ -18,8 +18,10 @@ const selectTariff = async(tarifName: UserTariff['name']) => {
     if(modal.value){
         modal.value['open']()
     }
-    loading.value=true
-    payLink.value = await buyTariff(user, activeTariff.value!).finally(()=>{loading.value=false})
+    if(user.value){
+        loading.value=true
+        payLink.value = await buyTariff(user.value, activeTariff.value!).finally(()=>{loading.value=false})
+    }
 }
 
 const modalClose = ()=> {

@@ -3,22 +3,23 @@ import { onBeforeMount, onMounted, Ref, ref } from "vue";
 import Loader from "./components/Loader.vue";
 import Router from "./components/Router.vue";
 import { Tg } from "./main";
-import { fetchUser } from "./useUser";
+import { store } from "./store";
+import { getUser } from "./user.service";
 
 const loading = ref(true)
 const auth: Ref<boolean> = ref(false)
 
 onBeforeMount(async()=>{  
-  const userId: number|undefined = Tg.initDataUnsafe?.user?.id
-  auth.value = import.meta.env.DEV ?? Boolean(userId)
+  const userId: number|null = Tg.initDataUnsafe?.user?.id || import.meta.env.DEV ? parseInt(import.meta.env.VITE_TEST_USER_ID, 10) : null
+  auth.value = Boolean(userId)
   if(!auth.value){
     loading.value=false
     return;
   } else {
-    fetchUser().finally(()=>{loading.value=false})
+    store.setAppIsExpanded(Tg?.isExpanded)
+    getUser(userId!).finally(()=>{loading.value=false})
   }
 })
-
 
 </script>
 
